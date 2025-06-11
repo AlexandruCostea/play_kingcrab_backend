@@ -27,6 +27,13 @@ This project provides a lightweight Rust-based **Actix Web API** wrapper around 
 git clone https://github.com/AlexandruCostea/KingCrab.git
 ```
 
+### Add the project to the dependencies
+
+- In Cargo.toml add the following line in the \[dependencies\] section
+```bash
+king_crab = { path = "<path to cloned repository>" }
+```
+
 ### Setting up the environment
 - Create a .env file at project root level
 - Fill in the following entries:
