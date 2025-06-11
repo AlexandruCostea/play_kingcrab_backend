@@ -37,7 +37,6 @@ king_crab = { path = "<path to cloned repository>" }
 ### Setting up the environment
 - Create a .env file at project root level
 - Fill in the following entries:
-- 
 ```bash
 CNN_MODEL_PATH=<path to cnn onnx file>
 CNN_DEPTH=<desired depth when using cnn evaluator>
