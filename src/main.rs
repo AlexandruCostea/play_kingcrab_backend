@@ -1,5 +1,7 @@
-use actix_web::{web, App, HttpServer};
+use actix_web::{web, App, HttpServer, http::header};
+use actix_cors::Cors;
 use dotenvy::dotenv;
+
 use std::sync::Mutex;
 use std::env;
 
@@ -28,7 +30,14 @@ async fn main() -> std::io::Result<()>{
     let shared_engine = web::Data::new(Mutex::new(engine));
 
     HttpServer::new(move || {
+        let cors = Cors::default()
+            .allowed_origin("http://localhost:5173")
+            .allowed_methods(vec!["POST"])
+            .allowed_headers(vec![header::CONTENT_TYPE])
+            .max_age(3600);
+
         App::new()
+            .wrap(cors)
             .app_data(shared_engine.clone())
             .service(switch_bot)
             .service(get_best_move)
