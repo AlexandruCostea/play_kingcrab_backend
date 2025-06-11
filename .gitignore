@@ -1,3 +1,9 @@
 /target
 
 Cargo.lock
+
+KingCrab/
+
+evaluation_models/
+
+.env

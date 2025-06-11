@@ -1,3 +1,39 @@
-fn main() {
-    println!("Hello, world!");
+use actix_web::{web, App, HttpServer};
+use dotenvy::dotenv;
+use std::sync::Mutex;
+use std::env;
+
+pub mod engine;
+pub mod models;
+pub mod controller;
+
+use crate::engine::engine::Engine;
+use crate::controller::controller::{get_best_move, switch_bot};
+
+
+#[actix_web::main]
+async fn main() -> std::io::Result<()>{
+    dotenv().ok();
+    let cnn_path: String = env::var("CNN_MODEL_PATH").expect("CNN_PATH must be set in .env file");
+    let cnn_depth: u8 = env::var("CNN_DEPTH").expect("CNN_DEPTH must be set in .env file")
+        .parse()
+        .expect("CNN_DEPTH must be a valid number");
+
+    let halfka_path: String = env::var("HALFKA_MODEL_PATH").expect("HALFKA_MODEL_PATH must be set in .env file");
+    let halfka_depth: u8 = env::var("HALFKA_DEPTH").expect("HALFKA_DEPTH must be set in .env file")
+        .parse()
+        .expect("HALFKA_DEPTH must be a valid number");
+
+    let engine = Engine::new(cnn_path, halfka_path, cnn_depth, halfka_depth);
+    let shared_engine = web::Data::new(Mutex::new(engine));
+
+    HttpServer::new(move || {
+        App::new()
+            .app_data(shared_engine.clone())
+            .service(switch_bot)
+            .service(get_best_move)
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
 }
