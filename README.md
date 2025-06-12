@@ -18,7 +18,7 @@ This project provides a lightweight Rust-based **Actix Web API** wrapper around 
 
 ### 🔧 Prerequisites
 - Rust (stable)
-- ONNX models trained from [`kiingcrab-evaluation`](https://github.com/AlexandruCostea/kingcrab-evaluation)
+- ONNX models trained from [`kingcrab-evaluation`](https://github.com/AlexandruCostea/kingcrab-evaluation)
 
 ### Importing the chess engine library
 
