@@ -13,6 +13,9 @@ use play_kingcrab_backend::get_best_move;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    dotenv().ok();
+    let frontend_url = env::var("FRONTEND_URL")
+                        .expect("FRONTEND_URL must be set in .env file");
 
     let(cnn_engine, halfka_engine) = init_engines();
     let shared_engines = web::Data::new(Mutex::new(
@@ -21,8 +24,7 @@ async fn main() -> std::io::Result<()> {
 
     HttpServer::new(move || {
         let cors = Cors::default()
-            .allowed_origin("http://localhost:5173")
-            .allowed_origin("http://127.0.0.1:5173")
+            .allowed_origin(&frontend_url)
             .allowed_methods(vec!["POST"])
             .allowed_headers(vec![header::CONTENT_TYPE])
             .max_age(3600);
@@ -39,7 +41,6 @@ async fn main() -> std::io::Result<()> {
 
 
 fn init_engines() -> (Engine<CNNEvaluator>, Engine<HalfkaEvaluator>) {
-    dotenv().ok();
     let cnn_path: String = env::var("CNN_MODEL_PATH")
                             .expect("CNN_PATH must be set in .env file");
     let cnn_depth: u8 = env::var("CNN_DEPTH")
