@@ -42,6 +42,8 @@ CNN_DEPTH=<desired depth when using cnn evaluator>
 
 HALFKA_MODEL_PATH=<path to halfka folder>
 HALFKA_DEPTH=<desired depth when using halfka evaluator>
+
+FRONTEND_URL=<url of the frontend to be allowed by cors>
 ```
 ### Build the project
 ```bash
