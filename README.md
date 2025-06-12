@@ -8,9 +8,8 @@ This project provides a lightweight Rust-based **Actix Web API** wrapper around 
 
 - 🧠 **Evaluation Strategies**: Supports switching between CNN and HalfKA neural network evaluators.
 - 📦 **REST API**:
-  - `POST /switch_bot` — change evaluation network
-  - `POST /get_best_move` — send a FEN and receive the best move
-- 🔐 Singleton engine instance (thread-safe via `Mutex`)
+  - `POST /get_best_move` — send an engine type string ("cnn" or "halfka") and a FEN and receive the best move from that engine's perspective
+- 🔐 Thread-safe engine instances via `Mutex`
 - 🧠 Uses ONNX models exported from [`kingcrab-evaluation`](https://github.com/AlexandruCostea/kingcrab-evaluation)
 
 ---
