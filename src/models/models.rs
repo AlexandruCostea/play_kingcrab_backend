@@ -1,12 +1,9 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize)]
-pub struct SwitchBotRequest {
-    pub bot_type: String
-}
 
 #[derive(Deserialize)]
 pub struct BestMoveRequest {
+    pub engine_type: String,
     pub fen: String
 }
 
