@@ -15,7 +15,7 @@ pub async fn get_best_move(
 ) -> impl Responder {
     let mut engines = data.lock().unwrap();
 
-    let best = match req.engine_type.as_str() {
+    let best = match req.engine_type.as_str().to_lowercase().as_str() {
         "cnn" => engines.0.search_best_move(&req.fen),
         "halfka" => engines.1.search_best_move(&req.fen),
         _ => return HttpResponse::BadRequest().body("Invalid engine type")
